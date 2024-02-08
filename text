@@ -1,0 +1,85 @@
+const createTableQuery = 
+`CREATE TABLE IF NOT EXISTS CourseEnteries (
+    Coursecode VARCHAR(255) NOT NULL,
+    Coursename VARCHAR(255) NOT NULL)`;
+
+
+
+    // CRUD operations
+app.post('/CourseEnteries', (req, res) => {
+    const { name, email } = req.body;
+    const insertQuery = 'INSERT INTO users (Coursecode,  Coursename) VALUES (?, ?)';
+    connection.query(insertQuery, [Coursecode,  Coursename], (err, result) => {
+      if (err) {
+        console.error('Error creating user:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        res.json({ id: result.insertId, name, email });
+      }
+    });
+  });
+
+
+  app.get('/users', (req, res) => {
+    const selectQuery = 'SELECT * FROM users';
+    connection.query(selectQuery, (err, results) => {
+      if (err) {
+        console.error('Error fetching users:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        res.json(results);
+      }
+    });
+  });
+
+//   app.get('/users/:id', (req, res) => {
+//     const userId = req.params.id;
+//     const selectQuery = 'SELECT * FROM users WHERE id = ?';
+//     connection.query(selectQuery, [userId], (err, results) => {
+//       if (err) {
+//         console.error('Error fetching user:', err);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//       } else {
+//         if (results.length === 0) {
+//           res.status(404).json({ error: 'User not found' });
+//         } else {
+//           res.json(results[0]);
+//         }
+//       }
+//     });
+//   });
+// (Coursecode,  Coursename)
+
+
+  app.put('/users', (req, res) => {
+    const userId = req.params.id;
+    const { name, email } = req.body;
+    const updateQuery = 'UPDATE users SET Coursecode = ?, Coursename = ? WHERE id = ?';
+    connection.query(updateQuery, [Coursecode, Coursename], (err) => {
+      if (err) {
+        console.error('Error updating user:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        res.json({ Coursecode, Coursename });
+      }
+    });
+  });
+
+
+  
+app.delete('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    const deleteQuery = 'DELETE FROM users WHERE id = ?';
+    connection.query(deleteQuery, [userId], (err, result) => {
+      if (err) {
+        console.error('Error deleting user:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        if (result.affectedRows === 0) {
+          res.status(404).json({ error: 'User not found' });
+        } else {
+          res.json({ message: 'User deleted successfully' });
+        }
+      }
+    });
+  });
